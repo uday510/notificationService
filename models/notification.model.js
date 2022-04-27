@@ -1,7 +1,6 @@
 const mongoose = require("mongoose");
 
 
-
 const notificationSchema = new mongoose.Schema({
     subject: {
         type: String,
@@ -15,11 +14,11 @@ const notificationSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    recepientEmails: {
+    recipientEmails: {
         type: [String],
         required: true
     },
-    requestor: {
+    requester: {
         type: String
     },
     sentStatus: {

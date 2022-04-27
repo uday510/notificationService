@@ -1,5 +1,5 @@
 module.exports = {
-    sentStatus: {
+    sentStatuses: {
         sent: "SENT",
         unsent: "UN_SENT`"
     }

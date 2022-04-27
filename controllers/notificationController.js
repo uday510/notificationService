@@ -1,5 +1,5 @@
 /**
- * Controller for the notifications request
+ *? Controller for the notifications request
  */
 
 const Notification = require('../models/notification.model');
@@ -11,12 +11,12 @@ exports.acceptNotificationRequest = async (req, res) => {
     const notificationObj = {
         subject: req.body.subject,
         content: req.body.content,
-        recepientEmails: req.body.recepientEmails,
-        requestor: req.body.requestor,
+        recipientEmails: req.body.recipientEmails,
+        requester: req.body.requester,
         ticketId: req.body.ticket
     }
 
-        /**
+  /**
   * ! 2. Check the notification status (if email is sent or not) Using the
   * ! tracking id
   */
@@ -26,11 +26,37 @@ exports.acceptNotificationRequest = async (req, res) => {
 
        return res.status(201).send({
            requestId: notification.ticketId,
-           status: "Accepted Request -It's in progress"
-       });
+           status: "Accepted Request - it's in progress"
+        });
     } catch(err) {
         console.log(err.message);
         return res.status(500).send({message: "Something went wrong at backend"});
     }  
 }
  
+/**
+ * Check the notification status (if email is sent or not) using the
+ * tracking id
+ */
+
+exports.getNotificationStatus = async (req, res) => {
+    const reqId = req.params.id;
+
+    try {
+        const notification = await Notification.findById({
+            reqId: reqId
+        });
+
+        return res.status(200).send({
+            requestId: notification.requestId,
+            sentStatus: notification.sentStatus
+        });
+
+    } catch (err) {
+        console.log(err);
+        return res.status(500).send({
+            message: "Internal error while fetching the notification request"
+        });
+        
+    }
+}
